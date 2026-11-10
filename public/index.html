@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ntandomods INC | APIs and modifications</title>
+<meta name="description" content="Ntandomods INC builds developer APIs and custom modifications. One key, clear docs, and mods built to your brief.">
+<link rel="icon" href="ntandomods-mark.svg" type="image/svg+xml">
+<meta property="og:title" content="Ntandomods INC">
+<meta property="og:description" content="APIs to build with. Modifications to make it yours.">
+<meta property="og:image" content="ntandomods-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#home" aria-label="Ntandomods INC home"><img src="ntandomods-logo.svg" alt="Ntandomods INC"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#apis">APIs</a>
+      <a href="#mods">Modifications</a>
+      <a href="#contact">Contact</a>
+      <a class="btn solid sm" href="#contact">Get API access</a>
+    </nav>
+  </div>
+</header>
+
+<main id="home">
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>APIs to build with. Mods to make it yours.</h1>
+      <p class="lead">Ntandomods INC provides ready-to-call APIs and builds custom modifications for your apps, tools and online projects. One key, plain documentation, and a team that answers.</p>
+      <div class="cta">
+        <a class="btn solid" href="#contact">Get API access</a>
+        <a class="btn" href="#mods">Request a modification</a>
+      </div>
+      <p class="meta">Try a sample request in the panel. No signup needed.</p>
+    </div>
+
+    <div class="console" aria-label="Sample API request">
+      <div class="console-bar"><i></i><i></i><i></i><span>api.ntandomods.com</span></div>
+      <div class="tabs" role="tablist" aria-label="Sample endpoints">
+        <button role="tab" aria-selected="true" data-ep="status">Status</button>
+        <button role="tab" aria-selected="false" data-ep="convert">Convert</button>
+        <button role="tab" aria-selected="false" data-ep="qr">QR code</button>
+      </div>
+      <pre class="req" id="req" tabindex="0"></pre>
+      <pre class="res" id="res" aria-live="polite"><span class="h">Press Send to see a sample response.</span></pre>
+      <div class="console-foot"><span>Sample data, not a live call</span><button class="send" id="send" type="button">Send request</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="apis" id="apis">
+  <div class="wrap">
+    <div class="head">
+      <h2>APIs you can call today</h2>
+      <p>Each endpoint takes a simple request and returns clean JSON. Use one API key across all of them.</p>
+    </div>
+    <div>
+      <div class="api-row"><h3>Media API</h3><p>Fetch, convert and process audio, video and images from a single request.</p><code>POST /v1/media</code></div>
+      <div class="api-row"><h3>Data API</h3><p>Look up and clean structured data, from metadata to scraped pages, without running your own crawlers.</p><code>GET /v1/data</code></div>
+      <div class="api-row"><h3>Utility API</h3><p>The small jobs every project needs: QR codes, file conversion, text tools and validation.</p><code>GET /v1/utils</code></div>
+      <div class="api-row"><h3>Automation API</h3><p>Trigger workflows and connect your apps so repeat tasks run without you.</p><code>POST /v1/run</code></div>
+    </div>
+  </div>
+</section>
+
+<section class="mods" id="mods">
+  <div class="wrap">
+    <div>
+      <div class="head">
+        <h2>Modifications built to your brief</h2>
+        <p>Need an app, tool or game changed in a way no setting allows? We design and build the modification, test it, and hand it over ready to use.</p>
+      </div>
+      <div class="tags" aria-label="What we modify">
+        <span>Apps</span><span>Games</span><span>Websites</span><span>Bots and tools</span><span>Integrations</span>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><div><h3>Tell us what you want changed</h3><p>Describe the goal and what you are working with. We reply with a clear scope and price.</p></div></li>
+      <li><div><h3>We build and test it</h3><p>You see progress as it comes together, and we fix what does not feel right.</p></div></li>
+      <li><div><h3>You get the finished mod</h3><p>Delivered with simple install notes, plus support if something breaks later.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div>
+      <h2>Start with a message</h2>
+      <p>Want an API key, a custom modification, or just a question answered? Tell us what you need and we will reply by email.</p>
+    </div>
+    <form id="form">
+      <label>Your name<input name="name" required autocomplete="name"></label>
+      <label>Email<input type="email" name="email" required autocomplete="email"></label>
+      <label>What do you need?
+        <select name="topic"><option>API access</option><option>Custom modification</option><option>Something else</option></select>
+      </label>
+      <label>Details<textarea name="msg" required></textarea></label>
+      <button class="btn solid" type="submit" style="justify-self:start">Send message</button>
+      <p class="note" id="note">Opens your email app with the message ready to send.</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <img src="ntandomods-logo-dark.svg" alt="Ntandomods INC">
+    <span>&copy; <span id="yr"></span> Ntandomods INC. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+const EMAIL="hello@ntandomods.com"; // change to your real contact address
+const EP={
+ status:{m:"GET",u:"/v1/status",body:null,res:{ok:true,service:"ntandomods-api",version:"1.0",uptime:"99.98%"}},
+ convert:{m:"POST",u:"/v1/media/convert",body:{url:"https://example.com/clip.mp4",to:"mp3"},res:{ok:true,format:"mp3",bitrate:"192k",download:"https://api.ntandomods.com/f/a81c.mp3"}},
+ qr:{m:"GET",u:"/v1/utils/qr?text=ntandomods.com&size=300",body:null,res:{ok:true,type:"image/png",size:"300x300",url:"https://api.ntandomods.com/f/qr-77e2.png"}}
+};
+const req=document.getElementById("req"),res=document.getElementById("res"),send=document.getElementById("send");
+let cur="status",timer;
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+function show(){
+  const e=EP[cur];
+  let t=`<span class="m">${e.m}</span> <span class="u">${esc(e.u)}</span>\n<span class="h">x-api-key:</span> YOUR_KEY`;
+  if(e.body)t+=`\n<span class="h">content-type:</span> application/json\n\n${esc(JSON.stringify(e.body,null,2))}`;
+  req.innerHTML=t;
+  res.innerHTML='<span class="h">Press Send to see a sample response.</span>';
+}
+function colour(j){return esc(j).replace(/"([^"]+)":/g,'<span class="k">"$1":</span>').replace(/: "([^"]*)"/g,': <span class="s">"$1"</span>').replace(/: (true|false|\d+)/g,': <span class="n">$1</span>')}
+document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
+  cur=b.dataset.ep;show();
+}));
+send.addEventListener("click",()=>{
+  clearTimeout(timer);
+  res.innerHTML='<span class="h">Waiting for response...</span>';
+  timer=setTimeout(()=>{
+    const full="200 OK  &middot;  84 ms\n\n"+colour(JSON.stringify(EP[cur].res,null,2));
+    const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if(reduce){res.innerHTML=full;return}
+    // simple approach: reveal by lines
+    const lines=full.split("\n");let n=0;res.innerHTML="";
+    const step=()=>{n++;res.innerHTML=lines.slice(0,n).join("\n");if(n<lines.length)timer=setTimeout(step,70)};step();
+  },350);
+});
+show();
+document.getElementById("yr").textContent=new Date().getFullYear();
+document.getElementById("form").addEventListener("submit",e=>{
+  e.preventDefault();
+  const f=new FormData(e.target);
+  const body=`Name: ${f.get("name")}\nEmail: ${f.get("email")}\n\n${f.get("msg")}`;
+  location.href=`mailto:${EMAIL}?subject=${encodeURIComponent("Ntandomods: "+f.get("topic"))}&body=${encodeURIComponent(body)}`;
+});
+</script>
+</body>
+</html>
