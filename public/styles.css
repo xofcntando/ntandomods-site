@@ -122,3 +122,12 @@ footer a{color:#B8C0F0}
 .try input{padding:8px 10px;border-radius:8px;font-size:14px}
 #qrimg{display:block;width:140px;height:140px;margin:0 20px 16px;background:#fff;border-radius:8px;padding:6px}
 .send:disabled{opacity:.6;cursor:wait}
+
+.about{background:var(--paper)}
+.about .wrap{display:grid;grid-template-columns:1fr 1.15fr;gap:64px;align-items:start}
+.about .head{margin:0}.about .head p+p{margin-top:12px}
+.does{margin:0;border-top:2px solid var(--ink)}
+.does div{display:grid;grid-template-columns:210px 1fr;gap:20px;padding:18px 0;border-bottom:1px solid var(--line)}
+.does dt{font:700 17px "Sora",sans-serif;letter-spacing:-.01em}
+.does dd{margin:0;color:var(--ink-2)}
+@media (max-width:900px){.about .wrap{grid-template-columns:1fr;gap:36px}.does div{grid-template-columns:1fr;gap:4px}}
