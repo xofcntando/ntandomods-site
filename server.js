@@ -166,7 +166,7 @@ function serveStatic(req, res, url) {
   }
   const ext = path.extname(file);
   const type = TYPES[ext] || "application/octet-stream";
-  const cache = ext === ".html" ? "no-cache" : ext === ".svg" || ext === ".png" ? "public, max-age=86400" : "public, max-age=3600";
+  const cache = ext === ".html" ? "no-cache" : ext === ".svg" || ext === ".png" ? "public, max-age=86400" : ext === ".css" || ext === ".js" ? "public, max-age=300" : "public, max-age=3600";
   if (ext === ".html") {
     if (!pageCache.has(file)) pageCache.set(file, render(file));
     return sendMaybeGzip(req, res, pageCache.get(file), ext, { "Content-Type": type, "Cache-Control": cache });
