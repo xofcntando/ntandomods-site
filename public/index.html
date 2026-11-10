@@ -39,8 +39,6 @@
       <a href="#mods">Modifications</a>
       <a href="#join">Join</a>
       <a href="#domains">Domains</a>
-      <a href="#brand">Brand</a>
-      <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
       <a class="btn solid sm" href="{{API_BASE}}/pricing">Get an API key</a>
     </nav>
@@ -52,12 +50,13 @@
   <div class="wrap">
     <div>
       <h1>APIs to build with. Mods to make it yours.</h1>
-      <p class="lead">Ntandomods INC runs Ladybug API, 187 tools behind a single key, and Ladybug Cloud, which keeps your WhatsApp bot online around the clock. We also build custom modifications to your brief, provide DNS and domains, and welcome developers to join us for $10.</p>
+      <p class="lead">Ntandomods INC runs Ladybug API, 187 tools behind a single key, and Ladybug Cloud, which keeps your WhatsApp bot online around the clock. We also build custom mods, provide DNS and domains, and welcome developers for $10.</p>
       <div class="cta">
         <a class="btn solid" href="{{API_BASE}}/pricing">Get an API key</a>
         <a class="btn" href="{{CLOUD_URL}}">Host a WhatsApp bot</a>
       </div>
-      <p class="meta">Try it: the panel makes a real call to Ladybug API. No signup needed.</p>
+      <ul class="chips" aria-label="Highlights"><li>50 free test requests</li><li>7 day bot trial, no card</li><li>Bot hosting from $3 a month</li></ul>
+      <p class="meta">The panel on the right makes a real call to Ladybug API. No signup needed.</p>
     </div>
 
     <div class="console" aria-label="Live API request">
@@ -182,13 +181,26 @@
     <div class="head">
       <h2>DNS and domains</h2>
       <p>We provide DNS and domains for your projects, so your API, bot dashboard or website lives on a name you choose. Tell us the name you want and where it should point, and we set it up.</p>
-      <p style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn solid sm" href="#contact" data-topic="DNS / domain">Ask for a domain</a></p>
+      <ol class="mini">
+        <li><b>Pick a name.</b> A domain or subdomain for your project.</li>
+        <li><b>Point it anywhere.</b> We set the records so it reaches your site, API, bot or server.</li>
+        <li><b>Check it yourself.</b> Use the DNS lookup in the live panel or <code>/v1/utils/dns</code> any time.</li>
+      </ol>
+      <p style="margin-top:24px"><a class="btn solid" href="#contact" data-topic="DNS / domain">Ask for a domain</a></p>
     </div>
-    <div>
-      <div class="api-row"><h3>Pick a name</h3><p>Tell us the domain or subdomain you want for your project.</p><code>yourname</code></div>
-      <div class="api-row"><h3>Point it anywhere</h3><p>We set the DNS records so it reaches your website, API, bot or server.</p><code>A &middot; CNAME &middot; TXT</code></div>
-      <div class="api-row"><h3>Check it yourself</h3><p>Use the DNS lookup in the live panel above, or the Ladybug API, to confirm the records anytime.</p><code>/v1/utils/dns</code></div>
-    </div>
+    <figure class="zone" aria-label="Example DNS records">
+      <figcaption><i></i><i></i><i></i><span>dns records, example</span></figcaption>
+      <table>
+        <thead><tr><th>Name</th><th>Type</th><th>Points to</th></tr></thead>
+        <tbody>
+          <tr><td>yourname.com</td><td><em>A</em></td><td>203.0.113.10</td></tr>
+          <tr><td>www.yourname.com</td><td><em>CNAME</em></td><td>yourname.com</td></tr>
+          <tr><td>api.yourname.com</td><td><em>CNAME</em></td><td>your-api-host.example</td></tr>
+          <tr><td>yourname.com</td><td><em>TXT</em></td><td>"verification=abc123"</td></tr>
+        </tbody>
+      </table>
+      <p class="zfoot"><span class="dot"></span>Example only. Your records depend on where your project runs.</p>
+    </figure>
   </div>
 </section>
 
@@ -233,6 +245,7 @@
     <div id="paths" class="paths">
       <a class="btn solid" href="{{API_BASE}}/pricing">Get an API key</a>
       <a class="btn" href="{{CLOUD_URL}}" style="color:#fff;border-color:#fff">Start a bot trial</a>
+      <div id="channels" class="channels" hidden></div>
       <p class="note">For custom modifications, developer membership or a domain, message us through Ladybug Cloud or your API account.</p>
     </div>
     <form id="form" hidden>
@@ -337,6 +350,14 @@ document.getElementById("yr").textContent=new Date().getFullYear();
 
 /* preselect the contact topic from CTA buttons */
 document.querySelectorAll("a[data-topic]").forEach(a=>a.addEventListener("click",()=>{const sel=document.querySelector('select[name="topic"]');if(sel)sel.value=a.dataset.topic}));
+/* contact channels from the business card settings */
+fetch("/api/card").then(r=>r.json()).then(c=>{
+  const box=document.getElementById("channels");if(!box)return;
+  const add=(t,h)=>{const a=document.createElement("a");a.className="btn";a.style.cssText="color:#fff;border-color:#fff";a.textContent=t;a.href=h;box.appendChild(a)};
+  if(c.email)add("Email us","mailto:"+c.email);
+  if(c.whatsapp)add("Message on WhatsApp","https://wa.me/"+c.whatsapp.replace(/\D/g,""));
+  if(box.children.length)box.hidden=false;
+}).catch(()=>{});
 /* menu, status, counters, copy */
 (()=>{
   const b=document.getElementById("menuBtn"),n=document.getElementById("nav");
