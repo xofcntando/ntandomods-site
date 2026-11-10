@@ -1,27 +1,18 @@
 services:
   - type: web
-    name: ntandomods
-    runtime: static
-    buildCommand: echo "static site, nothing to build"
-    staticPublishPath: ./public
-    pullRequestPreviewsEnabled: false
-    headers:
-      - path: /*
-        name: X-Content-Type-Options
-        value: nosniff
-      - path: /*
-        name: X-Frame-Options
-        value: DENY
-      - path: /*
-        name: Referrer-Policy
-        value: strict-origin-when-cross-origin
-      - path: /*.svg
-        name: Cache-Control
-        value: public, max-age=31536000, immutable
-      - path: /*.css
-        name: Cache-Control
-        value: public, max-age=3600
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
+    name: ntandomods-web
+    runtime: node
+    plan: free
+    buildCommand: echo "no build step"
+    startCommand: node server.js
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: API_BASE
+        value: https://ladybug-api-e8q8.onrender.com
+      - key: CLOUD_URL
+        value: https://ladybugcloud.xubi.org/
+      - key: CONTACT_TO
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false

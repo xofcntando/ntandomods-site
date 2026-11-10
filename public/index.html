@@ -24,7 +24,7 @@
       <a href="#cloud">Ladybug Cloud</a>
       <a href="#mods">Modifications</a>
       <a href="#contact">Contact</a>
-      <a class="btn solid sm" href="https://ladybug-api-e8q8.onrender.com/pricing">Get an API key</a>
+      <a class="btn solid sm" href="{{API_BASE}}/pricing">Get an API key</a>
     </nav>
   </div>
 </header>
@@ -36,14 +36,14 @@
       <h1>APIs to build with. Mods to make it yours.</h1>
       <p class="lead">Ntandomods INC runs Ladybug API, 187 tools behind a single key, and Ladybug Cloud, which keeps your WhatsApp bot online around the clock. We also build custom modifications to your brief.</p>
       <div class="cta">
-        <a class="btn solid" href="https://ladybug-api-e8q8.onrender.com/pricing">Get an API key</a>
-        <a class="btn" href="https://ladybugcloud.xubi.org/">Host a WhatsApp bot</a>
+        <a class="btn solid" href="{{API_BASE}}/pricing">Get an API key</a>
+        <a class="btn" href="{{CLOUD_URL}}">Host a WhatsApp bot</a>
       </div>
       <p class="meta">Try it: the panel makes a real call to Ladybug API. No signup needed.</p>
     </div>
 
     <div class="console" aria-label="Live API request">
-      <div class="console-bar"><i></i><i></i><i></i><span>ladybug-api-e8q8.onrender.com</span></div>
+      <div class="console-bar"><i></i><i></i><i></i><span>{{API_HOST}}</span></div>
       <div class="tabs" role="tablist" aria-label="Live endpoints">
         <button role="tab" aria-selected="true" data-ep="currency">Currency</button>
         <button role="tab" aria-selected="false" data-ep="dns">DNS lookup</button>
@@ -63,7 +63,7 @@
     <div class="head">
       <h2>Ladybug API</h2>
       <p>187 tools in 21 groups, one key. Send your key in the <code>X-API-Key</code> header and get JSON back. New users get 50 free test requests.</p>
-      <p style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn solid sm" href="https://ladybug-api-e8q8.onrender.com/">Browse the tools</a><a class="btn sm" href="https://ladybug-api-e8q8.onrender.com/docs">Read the docs</a><a class="btn sm" href="https://ladybug-api-e8q8.onrender.com/pricing">See plans</a></p>
+      <p style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn solid sm" href="{{API_BASE}}/">Browse the tools</a><a class="btn sm" href="{{API_BASE}}/docs">Read the docs</a><a class="btn sm" href="{{API_BASE}}/pricing">See plans</a></p>
     </div>
     <div>
       <div class="api-row"><h3>Media and downloads</h3><p>Download audio or video from YouTube, TikTok, Instagram and more, plus free licensed media.</p><code>/api/download</code></div>
@@ -81,7 +81,7 @@
     <div>
       <h2>Ladybug Cloud</h2>
       <p class="lead">Your WhatsApp bot, online in about two minutes. Link your number, press start, and Ladybug Cloud keeps Ladybug Mini running 24/7 with live logs and automatic restarts.</p>
-      <p><a class="btn solid" href="https://ladybugcloud.xubi.org/">Start the free trial</a></p>
+      <p><a class="btn solid" href="{{CLOUD_URL}}">Start the free trial</a></p>
     </div>
     <dl class="facts">
       <div><dt>7 days</dt><dd>Free, no card</dd></div>
@@ -118,8 +118,8 @@
       <p>Pick an API key, host a bot, or ask for a custom modification.</p>
     </div>
     <div id="paths" class="paths">
-      <a class="btn solid" href="https://ladybug-api-e8q8.onrender.com/pricing">Get an API key</a>
-      <a class="btn" href="https://ladybugcloud.xubi.org/" style="color:#fff;border-color:#fff">Start a bot trial</a>
+      <a class="btn solid" href="{{API_BASE}}/pricing">Get an API key</a>
+      <a class="btn" href="{{CLOUD_URL}}" style="color:#fff;border-color:#fff">Start a bot trial</a>
       <p class="note">For custom modifications, message us through Ladybug Cloud or your API account.</p>
     </div>
     <form id="form" hidden>
@@ -128,7 +128,8 @@
       <label>What do you need?
         <select name="topic"><option>API access</option><option>Custom modification</option><option>Something else</option></select>
       </label>
-      <label>Details<textarea name="msg" required></textarea></label>
+      <label>Details<textarea name="msg" required maxlength="3000"></textarea></label>
+      <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
       <button class="btn solid" type="submit" style="justify-self:start">Send message</button>
       <p class="note" id="note" role="status"></p>
     </form>
@@ -139,12 +140,12 @@
 <footer>
   <div class="wrap">
     <img src="ntandomods-logo-dark.svg" alt="Ntandomods INC">
-    <span><a href="https://ladybug-api-e8q8.onrender.com/">Ladybug API</a> &nbsp;&middot;&nbsp; <a href="https://ladybugcloud.xubi.org/">Ladybug Cloud</a> &nbsp;&middot;&nbsp; &copy; <span id="yr"></span> Ntandomods INC</span>
+    <span><a href="{{API_BASE}}/">Ladybug API</a> &nbsp;&middot;&nbsp; <a href="{{CLOUD_URL}}">Ladybug Cloud</a> &nbsp;&middot;&nbsp; &copy; <span id="yr"></span> Ntandomods INC</span>
   </div>
 </footer>
 
 <script>
-const API="https://ladybug-api-e8q8.onrender.com";
+const API="/api/ladybug";
 const EP={
  currency:{path:"/v1/utils/currency",fields:[["amount","Amount","100"],["from","From","USD"],["to","To","ZAR"]]},
  dns:{path:"/v1/utils/dns",fields:[["domain","Domain","ntandomods.mywire.org"]]},
@@ -198,18 +199,17 @@ send.addEventListener("click",async()=>{
   send.disabled=false;
 });
 build();
-// Contact form: add a free Web3Forms access key (web3forms.com) to turn it on
-const WEB3FORMS_KEY="";
-if(WEB3FORMS_KEY){$("form").hidden=false;$("paths").hidden=true}
+// Contact form is shown only when the server has email delivery configured
+fetch("/api/config").then(r=>r.json()).then(c=>{if(c.contact){$("form").hidden=false;$("paths").hidden=true}}).catch(()=>{});
 $("form").addEventListener("submit",async e=>{
   e.preventDefault();
   const btn=e.target.querySelector("button"),note=$("note");btn.disabled=true;note.textContent="Sending...";
-  const f=new FormData(e.target);f.append("access_key",WEB3FORMS_KEY);f.append("subject","Ntandomods website: "+f.get("topic"));
+  const f=Object.fromEntries(new FormData(e.target));
   try{
-    const r=await fetch("https://api.web3forms.com/submit",{method:"POST",body:f});
-    const j=await r.json();
-    if(j.success){note.textContent="Message sent. We will reply by email.";e.target.reset()}
-    else{note.textContent="Could not send: "+(j.message||"unknown error")+". Please try again."}
+    const r=await fetch("/api/contact",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(f)});
+    const j=await r.json().catch(()=>({}));
+    if(r.ok){note.textContent="Message sent. We will reply by email.";e.target.reset()}
+    else{note.textContent=(j.error||"Could not send")+". Please try again."}
   }catch(err){note.textContent="Could not send. Check your connection and try again."}
   btn.disabled=false;
 });
