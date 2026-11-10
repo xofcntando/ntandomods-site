@@ -241,3 +241,21 @@ footer .wrap:first-child{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;al
 .rules div{border-left:3px solid var(--gold);padding:4px 0 4px 16px}.rules h3{font-size:18px;margin-bottom:6px}.rules p{margin:0;color:var(--ink-2)}
 .dlall{margin-top:28px}
 @media (max-width:900px){.top .nav:not(#nav){display:flex;gap:14px;margin-left:auto}.top .nav:not(#nav) a:not(.btn){display:inline}}
+
+/* join + domains */
+.join{background:var(--night);color:#fff}
+.join .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:64px;align-items:center}
+.join h2{font-size:clamp(30px,3.8vw,44px);font-weight:700}
+.join .lead{color:#B8C0F0;font-size:19px;margin:16px 0 0;max-width:30em}
+.join .lead b{color:var(--gold)}
+.join .btn:not(.solid){color:#fff;border-color:#fff}.join .btn:not(.solid):hover{background:#fff;color:var(--ink)}
+.price{background:var(--night-2);border:1px solid #2B3470;border-radius:16px;padding:32px;position:relative;overflow:hidden}
+.price::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:linear-gradient(var(--cobalt) 70%,var(--gold) 0)}
+.price .tag{margin:0;color:#9AA4E0;font-weight:600;font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+.price .amt{font:800 64px/1 "Sora",sans-serif;letter-spacing:-.03em;margin:10px 0 18px}
+.price ul{list-style:none;margin:0 0 26px;padding:0;display:grid;gap:10px;color:#D5DAF7}
+.price li{padding-left:26px;position:relative}
+.price li::before{content:"";position:absolute;left:0;top:.5em;width:12px;height:12px;border-radius:3px;background:var(--gold)}
+.domains{background:var(--white);border-top:1px solid var(--line)}
+.domains .wrap{display:grid;grid-template-columns:1fr 1.15fr;gap:64px;align-items:start}
+@media (max-width:900px){.join .wrap,.domains .wrap{grid-template-columns:1fr;gap:36px}}

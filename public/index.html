@@ -37,6 +37,8 @@
       <a href="#apis">Ladybug API</a>
       <a href="#cloud">Ladybug Cloud</a>
       <a href="#mods">Modifications</a>
+      <a href="#join">Join</a>
+      <a href="#domains">Domains</a>
       <a href="#brand">Brand</a>
       <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
@@ -50,7 +52,7 @@
   <div class="wrap">
     <div>
       <h1>APIs to build with. Mods to make it yours.</h1>
-      <p class="lead">Ntandomods INC runs Ladybug API, 187 tools behind a single key, and Ladybug Cloud, which keeps your WhatsApp bot online around the clock. We also build custom modifications to your brief.</p>
+      <p class="lead">Ntandomods INC runs Ladybug API, 187 tools behind a single key, and Ladybug Cloud, which keeps your WhatsApp bot online around the clock. We also build custom modifications to your brief, provide DNS and domains, and welcome developers to join us for $10.</p>
       <div class="cta">
         <a class="btn solid" href="{{API_BASE}}/pricing">Get an API key</a>
         <a class="btn" href="{{CLOUD_URL}}">Host a WhatsApp bot</a>
@@ -155,6 +157,41 @@
   </div>
 </section>
 
+<section class="join" id="join">
+  <div class="wrap">
+    <div>
+      <h2>Join Ntandomods</h2>
+      <p class="lead">Developers can join Ntandomods for <b>$10</b>. Build alongside us, work with Ladybug API and Ladybug Cloud, and be part of the team behind the tools.</p>
+      <p style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn solid" href="#contact" data-topic="Join Ntandomods as a developer">Join for $10</a><a class="btn" href="{{API_BASE}}/docs">Read the API docs</a></p>
+    </div>
+    <div class="price" aria-label="Developer membership">
+      <p class="tag">Developer membership</p>
+      <p class="amt">$10</p>
+      <ul>
+        <li>Open to developers</li>
+        <li>Priced in US dollars or ZiG</li>
+        <li>Message us to get started</li>
+      </ul>
+      <a class="btn solid" href="#contact" data-topic="Join Ntandomods as a developer">Request to join</a>
+    </div>
+  </div>
+</section>
+
+<section class="domains" id="domains">
+  <div class="wrap">
+    <div class="head">
+      <h2>DNS and domains</h2>
+      <p>We provide DNS and domains for your projects, so your API, bot dashboard or website lives on a name you choose. Tell us the name you want and where it should point, and we set it up.</p>
+      <p style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn solid sm" href="#contact" data-topic="DNS / domain">Ask for a domain</a></p>
+    </div>
+    <div>
+      <div class="api-row"><h3>Pick a name</h3><p>Tell us the domain or subdomain you want for your project.</p><code>yourname</code></div>
+      <div class="api-row"><h3>Point it anywhere</h3><p>We set the DNS records so it reaches your website, API, bot or server.</p><code>A &middot; CNAME &middot; TXT</code></div>
+      <div class="api-row"><h3>Check it yourself</h3><p>Use the DNS lookup in the live panel above, or the Ladybug API, to confirm the records anytime.</p><code>/v1/utils/dns</code></div>
+    </div>
+  </div>
+</section>
+
 <section class="brandsec" id="brand">
   <div class="wrap">
     <div class="head">
@@ -179,6 +216,8 @@
       <details><summary>Which currencies do you accept?</summary><p>Everything we sell is priced in US dollars or ZiG.</p></details>
       <details><summary>Can I manage bots for my own clients?</summary><p>Yes. Resellers set up and manage several bots for clients from one dashboard.</p></details>
       <details><summary>What can you modify?</summary><p>Apps, games, websites, bots and tools, plus integrations between them. Describe the goal, get a scope and price, then we build it, test it and hand it over with install notes.</p></details>
+      <details><summary>How do I join Ntandomods?</summary><p>Developers can join for $10. Choose "Join Ntandomods as a developer" in the contact section, or message us through your Ladybug account, and we will take it from there.</p></details>
+      <details><summary>Do you provide domains and DNS?</summary><p>Yes. Tell us the domain or subdomain you want and where it should point, and we set up the DNS records. You can check them any time with the DNS lookup tool.</p></details>
       <details><summary>Is there a status page?</summary><p>Yes. The platform health badge in the footer of this page shows whether Ladybug API is up right now, and the Ladybug site has a public status page.</p></details>
       <details><summary>Where can I get your logo and colours?</summary><p>On the <a href="/brand">brand kit page</a>, with logos in SVG and PNG, colour codes, fonts, social covers and a print-ready business card.</p></details>
     </div>
@@ -194,13 +233,13 @@
     <div id="paths" class="paths">
       <a class="btn solid" href="{{API_BASE}}/pricing">Get an API key</a>
       <a class="btn" href="{{CLOUD_URL}}" style="color:#fff;border-color:#fff">Start a bot trial</a>
-      <p class="note">For custom modifications, message us through Ladybug Cloud or your API account.</p>
+      <p class="note">For custom modifications, developer membership or a domain, message us through Ladybug Cloud or your API account.</p>
     </div>
     <form id="form" hidden>
       <label>Your name<input name="name" required autocomplete="name"></label>
       <label>Email<input type="email" name="email" required autocomplete="email"></label>
       <label>What do you need?
-        <select name="topic"><option>API access</option><option>Custom modification</option><option>Something else</option></select>
+        <select name="topic"><option>API access</option><option>Custom modification</option><option>Join Ntandomods as a developer</option><option>DNS / domain</option><option>Something else</option></select>
       </label>
       <label>Details<textarea name="msg" required maxlength="3000"></textarea></label>
       <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
@@ -218,7 +257,7 @@
       <p>APIs to build with. Mods to make it yours.</p>
       <p class="status" id="status" hidden><i></i><span></span></p>
     </div>
-    <div class="fcol"><h4>Products</h4><a href="{{API_BASE}}/">Ladybug API</a><a href="{{API_BASE}}/docs">API docs</a><a href="{{CLOUD_URL}}">Ladybug Cloud</a><a href="#mods">Modifications</a></div>
+    <div class="fcol"><h4>Products</h4><a href="#join">Join as a developer</a><a href="#domains">DNS and domains</a><a href="{{API_BASE}}/">Ladybug API</a><a href="{{API_BASE}}/docs">API docs</a><a href="{{CLOUD_URL}}">Ladybug Cloud</a><a href="#mods">Modifications</a></div>
     <div class="fcol"><h4>Company</h4><a href="#about">About</a><a href="/card">Business card</a><a href="/brand">Brand kit</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></div>
     <div class="fcol"><h4>Share</h4><button class="linkbtn" id="copyLink" type="button">Copy site link</button><a href="/card.vcf">Save contact</a><a href="/brand/og-image.png">Social preview image</a></div>
   </div>
@@ -296,6 +335,8 @@ $("form").addEventListener("submit",async e=>{
 });
 document.getElementById("yr").textContent=new Date().getFullYear();
 
+/* preselect the contact topic from CTA buttons */
+document.querySelectorAll("a[data-topic]").forEach(a=>a.addEventListener("click",()=>{const sel=document.querySelector('select[name="topic"]');if(sel)sel.value=a.dataset.topic}));
 /* menu, status, counters, copy */
 (()=>{
   const b=document.getElementById("menuBtn"),n=document.getElementById("nav");
