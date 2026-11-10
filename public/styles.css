@@ -100,3 +100,18 @@ footer img{height:44px}
   .hero{padding:48px 0 64px} section{padding:64px 0}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+
+.head code{font:14px ui-monospace,Menlo,Consolas,monospace;background:var(--paper);border:1px solid var(--line);padding:2px 7px;border-radius:6px}
+.cloud{background:var(--paper)}
+.cloud .wrap{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.cloud h2{font-size:clamp(30px,3.8vw,44px);font-weight:700}
+.cloud .lead{color:var(--ink-2);font-size:18px;margin:16px 0 28px;max-width:30em}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:0;border:1px solid var(--line);border-radius:14px;background:var(--white);overflow:hidden}
+.facts div{padding:26px 24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.facts div:nth-child(2n){border-right:0}.facts div:nth-last-child(-n+2){border-bottom:0}
+.facts dt{font:700 24px "Sora",sans-serif;letter-spacing:-.02em}
+.facts dd{margin:6px 0 0;color:var(--ink-2);font-size:15px}
+.paths{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.paths[hidden],form[hidden]{display:none}
+footer a{color:#B8C0F0}
+@media (max-width:900px){.cloud .wrap{grid-template-columns:1fr;gap:36px}}

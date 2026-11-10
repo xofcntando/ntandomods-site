@@ -4,8 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Ntandomods INC | APIs and modifications</title>
-<meta name="description" content="Ntandomods INC builds developer APIs and custom modifications. One key, clear docs, and mods built to your brief.">
+<meta name="description" content="Ntandomods INC runs Ladybug API, a developer API with 187 tools behind one key, and Ladybug Cloud, WhatsApp bot hosting. We also build custom modifications.">
 <link rel="icon" href="ntandomods-mark.svg" type="image/svg+xml">
+<link rel="canonical" href="https://ntandomods.mywire.org/">
+<meta property="og:url" content="https://ntandomods.mywire.org/">
 <meta property="og:title" content="Ntandomods INC">
 <meta property="og:description" content="APIs to build with. Modifications to make it yours.">
 <meta property="og:image" content="ntandomods-logo.png">
@@ -18,10 +20,11 @@
   <div class="wrap">
     <a class="brand" href="#home" aria-label="Ntandomods INC home"><img src="ntandomods-logo.svg" alt="Ntandomods INC"></a>
     <nav class="nav" aria-label="Main">
-      <a href="#apis">APIs</a>
+      <a href="#apis">Ladybug API</a>
+      <a href="#cloud">Ladybug Cloud</a>
       <a href="#mods">Modifications</a>
       <a href="#contact">Contact</a>
-      <a class="btn solid sm" href="#contact">Get API access</a>
+      <a class="btn solid sm" href="https://ladybug-api-e8q8.onrender.com/pricing">Get an API key</a>
     </nav>
   </div>
 </header>
@@ -31,24 +34,24 @@
   <div class="wrap">
     <div>
       <h1>APIs to build with. Mods to make it yours.</h1>
-      <p class="lead">Ntandomods INC provides ready-to-call APIs and builds custom modifications for your apps, tools and online projects. One key, plain documentation, and a team that answers.</p>
+      <p class="lead">Ntandomods INC runs Ladybug API, 187 tools behind a single key, and Ladybug Cloud, which keeps your WhatsApp bot online around the clock. We also build custom modifications to your brief.</p>
       <div class="cta">
-        <a class="btn solid" href="#contact">Get API access</a>
-        <a class="btn" href="#mods">Request a modification</a>
+        <a class="btn solid" href="https://ladybug-api-e8q8.onrender.com/pricing">Get an API key</a>
+        <a class="btn" href="https://ladybugcloud.xubi.org/">Host a WhatsApp bot</a>
       </div>
       <p class="meta">Try a sample request in the panel. No signup needed.</p>
     </div>
 
     <div class="console" aria-label="Sample API request">
-      <div class="console-bar"><i></i><i></i><i></i><span>api.ntandomods.com</span></div>
+      <div class="console-bar"><i></i><i></i><i></i><span>ladybug-api-e8q8.onrender.com</span></div>
       <div class="tabs" role="tablist" aria-label="Sample endpoints">
         <button role="tab" aria-selected="true" data-ep="status">Status</button>
-        <button role="tab" aria-selected="false" data-ep="convert">Convert</button>
+        <button role="tab" aria-selected="false" data-ep="translate">Translate</button>
         <button role="tab" aria-selected="false" data-ep="qr">QR code</button>
       </div>
       <pre class="req" id="req" tabindex="0"></pre>
       <pre class="res" id="res" aria-live="polite"><span class="h">Press Send to see a sample response.</span></pre>
-      <div class="console-foot"><span>Sample data, not a live call</span><button class="send" id="send" type="button">Send request</button></div>
+      <div class="console-foot"><span>Sample response, not a live call</span><button class="send" id="send" type="button">Send request</button></div>
     </div>
   </div>
 </section>
@@ -56,15 +59,34 @@
 <section class="apis" id="apis">
   <div class="wrap">
     <div class="head">
-      <h2>APIs you can call today</h2>
-      <p>Each endpoint takes a simple request and returns clean JSON. Use one API key across all of them.</p>
+      <h2>Ladybug API</h2>
+      <p>187 tools in 21 groups, one key. Send your key in the <code>X-API-Key</code> header and get JSON back. New users get 50 free test requests.</p>
+      <p style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn solid sm" href="https://ladybug-api-e8q8.onrender.com/">Browse the tools</a><a class="btn sm" href="https://ladybug-api-e8q8.onrender.com/docs">Read the docs</a><a class="btn sm" href="https://ladybug-api-e8q8.onrender.com/pricing">See plans</a></p>
     </div>
     <div>
-      <div class="api-row"><h3>Media API</h3><p>Fetch, convert and process audio, video and images from a single request.</p><code>POST /v1/media</code></div>
-      <div class="api-row"><h3>Data API</h3><p>Look up and clean structured data, from metadata to scraped pages, without running your own crawlers.</p><code>GET /v1/data</code></div>
-      <div class="api-row"><h3>Utility API</h3><p>The small jobs every project needs: QR codes, file conversion, text tools and validation.</p><code>GET /v1/utils</code></div>
-      <div class="api-row"><h3>Automation API</h3><p>Trigger workflows and connect your apps so repeat tasks run without you.</p><code>POST /v1/run</code></div>
+      <div class="api-row"><h3>Media and downloads</h3><p>Download audio or video from YouTube, TikTok, Instagram and more, plus free licensed media.</p><code>/api/download</code></div>
+      <div class="api-row"><h3>AI</h3><p>Summarise, translate, rewrite, classify, write product descriptions and SEO meta, and turn text into speech.</p><code>/v1/ai/translate</code></div>
+      <div class="api-row"><h3>Images</h3><p>Edit and convert images, remove backgrounds and pull colours from any picture.</p><code>/v1/image</code></div>
+      <div class="api-row"><h3>Business tools</h3><p>Invoices, VAT checks, currency, e-mail validation and other jobs a small business repeats every week.</p><code>/v1/business</code></div>
+      <div class="api-row"><h3>Dev tools and utilities</h3><p>QR codes, hashes, slugs, UUIDs, DNS lookups and scraping, ready to drop into your code.</p><code>/v1/qr</code></div>
+      <div class="api-row"><h3>Music, YouTube and anime</h3><p>Music metadata, YouTube search and transcripts, and a full anime database.</p><code>/v1/anime</code></div>
     </div>
+  </div>
+</section>
+
+<section class="cloud" id="cloud">
+  <div class="wrap">
+    <div>
+      <h2>Ladybug Cloud</h2>
+      <p class="lead">Your WhatsApp bot, online in about two minutes. Link your number, press start, and Ladybug Cloud keeps Ladybug Mini running 24/7 with live logs and automatic restarts.</p>
+      <p><a class="btn solid" href="https://ladybugcloud.xubi.org/">Start the free trial</a></p>
+    </div>
+    <dl class="facts">
+      <div><dt>7 days</dt><dd>Free, no card</dd></div>
+      <div><dt>20 coins a day</dt><dd>Free, keeps one bot online for 24 hours</dd></div>
+      <div><dt>$3 a month</dt><dd>Unlimited, no coins needed</dd></div>
+      <div><dt>42+ commands</dt><dd>Admin tools, downloaders, AI and stickers</dd></div>
+    </dl>
   </div>
 </section>
 
@@ -80,7 +102,7 @@
       </div>
     </div>
     <ol class="steps">
-      <li><div><h3>Tell us what you want changed</h3><p>Describe the goal and what you are working with. We reply with a clear scope and price.</p></div></li>
+      <li><div><h3>Tell us what you want changed</h3><p>Describe the goal and what you are working with, for example a bot, an app or a tool. We reply with a clear scope and price.</p></div></li>
       <li><div><h3>We build and test it</h3><p>You see progress as it comes together, and we fix what does not feel right.</p></div></li>
       <li><div><h3>You get the finished mod</h3><p>Delivered with simple install notes, plus support if something breaks later.</p></div></li>
     </ol>
@@ -90,10 +112,15 @@
 <section class="contact" id="contact">
   <div class="wrap">
     <div>
-      <h2>Start with a message</h2>
-      <p>Want an API key, a custom modification, or just a question answered? Tell us what you need and we will reply by email.</p>
+      <h2>Start in minutes</h2>
+      <p>Pick an API key, host a bot, or ask for a custom modification.</p>
     </div>
-    <form id="form">
+    <div id="paths" class="paths">
+      <a class="btn solid" href="https://ladybug-api-e8q8.onrender.com/pricing">Get an API key</a>
+      <a class="btn" href="https://ladybugcloud.xubi.org/" style="color:#fff;border-color:#fff">Start a bot trial</a>
+      <p class="note">For custom modifications, message us through Ladybug Cloud or your API account.</p>
+    </div>
+    <form id="form" hidden>
       <label>Your name<input name="name" required autocomplete="name"></label>
       <label>Email<input type="email" name="email" required autocomplete="email"></label>
       <label>What do you need?
@@ -110,23 +137,23 @@
 <footer>
   <div class="wrap">
     <img src="ntandomods-logo-dark.svg" alt="Ntandomods INC">
-    <span>&copy; <span id="yr"></span> Ntandomods INC. All rights reserved.</span>
+    <span><a href="https://ladybug-api-e8q8.onrender.com/">Ladybug API</a> &nbsp;&middot;&nbsp; <a href="https://ladybugcloud.xubi.org/">Ladybug Cloud</a> &nbsp;&middot;&nbsp; &copy; <span id="yr"></span> Ntandomods INC</span>
   </div>
 </footer>
 
 <script>
-const EMAIL="hello@ntandomods.com"; // change to your real contact address
+const EMAIL=""; // add your real contact address here
 const EP={
- status:{m:"GET",u:"/v1/status",body:null,res:{ok:true,service:"ntandomods-api",version:"1.0",uptime:"99.98%"}},
- convert:{m:"POST",u:"/v1/media/convert",body:{url:"https://example.com/clip.mp4",to:"mp3"},res:{ok:true,format:"mp3",bitrate:"192k",download:"https://api.ntandomods.com/f/a81c.mp3"}},
- qr:{m:"GET",u:"/v1/utils/qr?text=ntandomods.com&size=300",body:null,res:{ok:true,type:"image/png",size:"300x300",url:"https://api.ntandomods.com/f/qr-77e2.png"}}
+ status:{m:"GET",u:"/health",key:false,body:null,res:{status:"ok"}},
+ translate:{m:"POST",u:"/v1/ai/translate",key:true,body:{text:"Good morning",target_language:"Zulu"},res:{ok:true,translation:"Sawubona ekuseni"}},
+ qr:{m:"GET",u:"/v1/qr?data=ntandomods.mywire.org&size=300",key:true,body:null,res:{ok:true,type:"image/png",size:"300x300"}}
 };
 const req=document.getElementById("req"),res=document.getElementById("res"),send=document.getElementById("send");
 let cur="status",timer;
 const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
 function show(){
   const e=EP[cur];
-  let t=`<span class="m">${e.m}</span> <span class="u">${esc(e.u)}</span>\n<span class="h">x-api-key:</span> YOUR_KEY`;
+  let t=`<span class="m">${e.m}</span> <span class="u">${esc(e.u)}</span>${e.key?`\n<span class="h">X-API-Key:</span> YOUR_KEY`:""}`;
   if(e.body)t+=`\n<span class="h">content-type:</span> application/json\n\n${esc(JSON.stringify(e.body,null,2))}`;
   req.innerHTML=t;
   res.innerHTML='<span class="h">Press Send to see a sample response.</span>';
@@ -150,6 +177,7 @@ send.addEventListener("click",()=>{
 });
 show();
 document.getElementById("yr").textContent=new Date().getFullYear();
+if(EMAIL){document.getElementById("form").hidden=false;document.getElementById("paths").hidden=true}
 document.getElementById("form").addEventListener("submit",e=>{
   e.preventDefault();
   const f=new FormData(e.target);
