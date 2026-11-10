@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Business card | Ntandomods INC</title>
+<meta name="description" content="Save the Ntandomods INC digital business card: website, Ladybug API, Ladybug Cloud and contact details in one tap.">
+<link rel="canonical" href="https://ntandomods.mywire.org/card">
+<meta property="og:title" content="Ntandomods INC business card">
+<meta property="og:description" content="Save our contact details in one tap.">
+<meta property="og:image" content="https://ntandomods.mywire.org/brand/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0E1330">
+<link rel="manifest" href="/site.webmanifest"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="/" aria-label="Ntandomods INC home"><img src="/ntandomods-logo.svg" alt="Ntandomods INC"></a>
+  <nav class="nav open-static" aria-label="Main"><a href="/">Home</a><a href="/brand">Brand kit</a><a class="btn solid sm" href="/card.vcf">Save contact</a></nav>
+</div></header>
+
+<main class="cardpage">
+  <div class="wrap">
+    <div>
+      <button class="flip" id="flip" type="button" aria-label="Flip the business card">
+        <span class="flip-in">
+          <img src="/brand/cards/business-card-front.png" alt="Business card front">
+          <img src="/brand/cards/business-card-back.png" alt="Business card back">
+        </span>
+      </button>
+      <p class="hint">Tap the card to flip it</p>
+    </div>
+
+    <div class="cardinfo">
+      <h1 id="who">Ntandomods INC</h1>
+      <p class="role" id="role">APIs to build with. Mods to make it yours.</p>
+      <ul class="clist" id="list"></ul>
+      <div class="row">
+        <a class="btn solid" href="/card.vcf" download>Save contact</a>
+        <button class="btn light" id="share" type="button">Share card</button>
+        <a class="btn light" href="/brand/cards/business-card-print.pdf" download>Print PDF</a>
+      </div>
+      <div class="qrbox"><img src="/brand/qr-card.png" alt="QR code that opens this business card"><span>Scan to open this card on another phone.</span></div>
+    </div>
+  </div>
+</main>
+
+<script>
+const IC={web:"W",email:"@",phone:"T",wa:"WA",api:"A",cloud:"C"};
+const list=document.getElementById("list");
+function row(k,label,value,href){
+  const li=document.createElement("li"),a=document.createElement("a");
+  a.href=href;if(/^https?:/.test(href))a.rel="noopener";
+  a.innerHTML='<span class="ic">'+IC[k]+'</span><span><small></small><span class="v"></span></span>';
+  a.querySelector("small").textContent=label;a.querySelector(".v").textContent=value;
+  li.appendChild(a);list.appendChild(li);
+}
+fetch("/api/card").then(r=>r.json()).then(c=>{
+  document.getElementById("who").textContent=c.name||c.company;
+  document.getElementById("role").textContent=c.name?[c.title,c.company].filter(Boolean).join(", "):c.tagline;
+  if(c.email)row("email","Email",c.email,"mailto:"+c.email);
+  if(c.phone)row("phone","Phone",c.phone,"tel:"+c.phone.replace(/[^\d+]/g,""));
+  if(c.whatsapp)row("wa","WhatsApp",c.whatsapp,"https://wa.me/"+c.whatsapp.replace(/\D/g,""));
+  if(c.website)row("web","Website",c.website.replace(/^https?:\/\//,""),c.website);
+  (c.links||[]).forEach(l=>row(/cloud/i.test(l.label)?"cloud":"api",l.label,l.url.replace(/^https?:\/\//,"").replace(/\/$/,""),l.url));
+  document.title=(c.name||c.company)+" | Business card";
+}).catch(()=>{row("web","Website","ntandomods.mywire.org","/")});
+const f=document.getElementById("flip");f.addEventListener("click",()=>f.classList.toggle("on"));
+const sh=document.getElementById("share");
+sh.addEventListener("click",async()=>{
+  const data={title:"Ntandomods INC",text:"Ntandomods INC business card",url:location.href};
+  if(navigator.share){try{await navigator.share(data)}catch{}}
+  else{try{await navigator.clipboard.writeText(location.href);sh.textContent="Link copied"}catch{sh.textContent=location.href}setTimeout(()=>sh.textContent="Share card",2200)}
+});
+</script>
+</body>
+</html>

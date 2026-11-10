@@ -10,7 +10,19 @@
 <meta property="og:url" content="https://ntandomods.mywire.org/">
 <meta property="og:title" content="Ntandomods INC">
 <meta property="og:description" content="APIs to build with. Modifications to make it yours.">
-<meta property="og:image" content="ntandomods-logo.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ntandomods INC">
+<meta property="og:image" content="https://ntandomods.mywire.org/brand/og-image.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ntandomods INC | APIs and modifications">
+<meta name="twitter:description" content="Ladybug API: 187 tools behind one key. Ladybug Cloud: WhatsApp bot hosting. Custom modifications built to your brief.">
+<meta name="twitter:image" content="https://ntandomods.mywire.org/brand/og-image.png">
+<meta name="theme-color" content="#0E1330">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Ntandomods INC","url":"https://ntandomods.mywire.org/","logo":"https://ntandomods.mywire.org/icon-512.png","description":"Ntandomods INC runs Ladybug API and Ladybug Cloud and builds custom modifications.","sameAs":["{{API_BASE}}/","{{CLOUD_URL}}"]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -19,11 +31,14 @@
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#home" aria-label="Ntandomods INC home"><img src="ntandomods-logo.svg" alt="Ntandomods INC"></a>
-    <nav class="nav" aria-label="Main">
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
+    <nav class="nav" id="nav" aria-label="Main">
       <a href="#about">About</a>
       <a href="#apis">Ladybug API</a>
       <a href="#cloud">Ladybug Cloud</a>
       <a href="#mods">Modifications</a>
+      <a href="#brand">Brand</a>
+      <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
       <a class="btn solid sm" href="{{API_BASE}}/pricing">Get an API key</a>
     </nav>
@@ -56,6 +71,16 @@
       <img id="qrimg" alt="Generated QR code" hidden>
       <div class="console-foot"><span id="quota">Live call. Uses a free test key, 50 requests.</span><button class="send" id="send" type="button">Send request</button></div>
     </div>
+  </div>
+</section>
+
+<section class="stats" aria-label="Ntandomods in numbers">
+  <div class="wrap">
+    <div><b data-count="187">187</b><span>API tools behind one key</span></div>
+    <div><b data-count="21">21</b><span>tool groups</span></div>
+    <div><b data-count="42" data-suffix="+">42+</b><span>bot commands in Ladybug Mini</span></div>
+    <div><b data-count="50">50</b><span>free test requests</span></div>
+    <div><b>24/7</b><span>bot hosting with auto restart</span></div>
   </div>
 </section>
 
@@ -130,6 +155,36 @@
   </div>
 </section>
 
+<section class="brandsec" id="brand">
+  <div class="wrap">
+    <div class="head">
+      <h2>Our brand and business card</h2>
+      <p>Meet us the same way everywhere. Save our digital business card to your phone, grab the logos and colours for a mention or a partner page, or download the print-ready card.</p>
+      <p style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn solid sm" href="/card">Open business card</a><a class="btn sm" href="/brand">Brand kit</a><a class="btn sm" href="/card.vcf">Save contact (.vcf)</a></p>
+    </div>
+    <div class="cardshow" aria-label="Business card preview">
+      <img class="c1" src="/brand/cards/business-card-front.png" alt="Ntandomods INC business card, front" loading="lazy">
+      <img class="c2" src="/brand/cards/business-card-back.png" alt="Ntandomods INC business card, back" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="head"><h2>Questions we hear a lot</h2><p>Cannot find your answer? Message us from your Ladybug dashboard and we reply.</p></div>
+    <div class="faqlist">
+      <details><summary>Do I need to pay to try Ladybug API?</summary><p>No. You get a free test key with 50 requests, no signup. The live panel at the top of this page uses the same key.</p></details>
+      <details><summary>How does Ladybug Cloud pricing work?</summary><p>There is a free 7 day trial with no card. After that you can run one bot for 24 hours on 20 free coins a day, or go unlimited for $3 a month with no coins needed.</p></details>
+      <details><summary>What is Ladybug Mini?</summary><p>It is our ready-made WhatsApp bot with 42+ commands for group admin, downloads, AI and stickers. Ladybug Cloud keeps it online.</p></details>
+      <details><summary>Which currencies do you accept?</summary><p>Everything we sell is priced in US dollars or ZiG.</p></details>
+      <details><summary>Can I manage bots for my own clients?</summary><p>Yes. Resellers set up and manage several bots for clients from one dashboard.</p></details>
+      <details><summary>What can you modify?</summary><p>Apps, games, websites, bots and tools, plus integrations between them. Describe the goal, get a scope and price, then we build it, test it and hand it over with install notes.</p></details>
+      <details><summary>Is there a status page?</summary><p>Yes. The platform health badge in the footer of this page shows whether Ladybug API is up right now, and the Ladybug site has a public status page.</p></details>
+      <details><summary>Where can I get your logo and colours?</summary><p>On the <a href="/brand">brand kit page</a>, with logos in SVG and PNG, colour codes, fonts, social covers and a print-ready business card.</p></details>
+    </div>
+  </div>
+</section>
+
 <section class="contact" id="contact">
   <div class="wrap">
     <div>
@@ -158,9 +213,16 @@
 
 <footer>
   <div class="wrap">
-    <img src="ntandomods-logo-dark.svg" alt="Ntandomods INC">
-    <span><a href="{{API_BASE}}/">Ladybug API</a> &nbsp;&middot;&nbsp; <a href="{{CLOUD_URL}}">Ladybug Cloud</a> &nbsp;&middot;&nbsp; &copy; <span id="yr"></span> Ntandomods INC</span>
+    <div class="fcol">
+      <img src="ntandomods-logo-dark.svg" alt="Ntandomods INC">
+      <p>APIs to build with. Mods to make it yours.</p>
+      <p class="status" id="status" hidden><i></i><span></span></p>
+    </div>
+    <div class="fcol"><h4>Products</h4><a href="{{API_BASE}}/">Ladybug API</a><a href="{{API_BASE}}/docs">API docs</a><a href="{{CLOUD_URL}}">Ladybug Cloud</a><a href="#mods">Modifications</a></div>
+    <div class="fcol"><h4>Company</h4><a href="#about">About</a><a href="/card">Business card</a><a href="/brand">Brand kit</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></div>
+    <div class="fcol"><h4>Share</h4><button class="linkbtn" id="copyLink" type="button">Copy site link</button><a href="/card.vcf">Save contact</a><a href="/brand/og-image.png">Social preview image</a></div>
   </div>
+  <div class="wrap legal">&copy; <span id="yr"></span> Ntandomods INC. All rights reserved.</div>
 </footer>
 
 <script>
@@ -233,6 +295,30 @@ $("form").addEventListener("submit",async e=>{
   btn.disabled=false;
 });
 document.getElementById("yr").textContent=new Date().getFullYear();
+
+/* menu, status, counters, copy */
+(()=>{
+  const b=document.getElementById("menuBtn"),n=document.getElementById("nav");
+  b.addEventListener("click",()=>{const o=n.classList.toggle("open");b.setAttribute("aria-expanded",o)});
+  n.addEventListener("click",e=>{if(e.target.closest("a")){n.classList.remove("open");b.setAttribute("aria-expanded","false")}});
+  fetch("/api/status").then(r=>r.json()).then(d=>{
+    const s=document.getElementById("status");if(d.api===null||d.api===undefined)return;
+    s.hidden=false;s.className="status "+(d.api?"up":"down");s.querySelector("span").textContent=d.api?"Ladybug API is up":"Ladybug API is having trouble";
+  }).catch(()=>{});
+  const cp=document.getElementById("copyLink");
+  cp.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(location.origin);cp.textContent="Link copied"}catch{cp.textContent=location.origin}setTimeout(()=>cp.textContent="Copy site link",2000)});
+  const els=document.querySelectorAll("[data-count]");
+  if(!matchMedia("(prefers-reduced-motion:reduce)").matches&&"IntersectionObserver" in window){
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);
+      const el=e.target,end=+el.dataset.count,suf=el.dataset.suffix||"",t0=performance.now();
+      const tick=t=>{const p=Math.min(1,(t-t0)/900);el.textContent=Math.round(end*(1-Math.pow(1-p,3)))+suf;if(p<1)requestAnimationFrame(tick)};requestAnimationFrame(tick)}),{threshold:.6});
+    els.forEach(e=>io.observe(e));
+  }
+  /* highlight current section in the nav */
+  const links=[...n.querySelectorAll('a[href^="#"]')],map=new Map(links.map(a=>[a.getAttribute("href").slice(1),a]));
+  if("IntersectionObserver" in window){const so=new IntersectionObserver(es=>es.forEach(e=>{const a=map.get(e.target.id);if(a&&e.isIntersecting){links.forEach(x=>x.classList.remove("active"));a.classList.add("active")}}),{rootMargin:"-45% 0px -50% 0px"});
+    map.forEach((a,id)=>{const sec=document.getElementById(id);if(sec)so.observe(sec)})}
+})();
 </script>
 </body>
 </html>

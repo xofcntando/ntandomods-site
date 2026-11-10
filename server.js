@@ -1,6 +1,7 @@
 // Ntandomods INC web server. No dependencies. Node 18+.
 const http = require("http");
 const fs = require("fs");
+const zlib = require("zlib");
 const path = require("path");
 
 const PORT = process.env.PORT || 3000;
@@ -15,8 +16,10 @@ const contactEnabled = !!(RESEND_API_KEY && CONTACT_TO);
 const TYPES = {
   ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8",
   ".svg": "image/svg+xml", ".png": "image/png", ".jpg": "image/jpeg", ".ico": "image/x-icon", ".txt": "text/plain; charset=utf-8",
-  ".xml": "application/xml", ".json": "application/json",
+  ".xml": "application/xml", ".json": "application/json", ".webp": "image/webp", ".pdf": "application/pdf",
+  ".vcf": "text/vcard; charset=utf-8", ".webmanifest": "application/manifest+json", ".woff2": "font/woff2",
 };
+const COMPRESSIBLE = new Set([".html", ".css", ".js", ".svg", ".txt", ".xml", ".json", ".webmanifest"]);
 const SECURITY = {
   "X-Content-Type-Options": "nosniff",
   "X-Frame-Options": "DENY",
@@ -91,16 +94,72 @@ async function contact(req, res) {
   json(res, 200, { ok: true });
 }
 
+// ---- business card (config/card.json, overridable with CARD_* env vars) ----
+function cardData() {
+  let c = {};
+  try { c = JSON.parse(fs.readFileSync(path.join(__dirname, "config", "card.json"), "utf8")); } catch {}
+  const env = process.env;
+  return {
+    company: env.CARD_COMPANY || c.company || "Ntandomods INC",
+    name: env.CARD_NAME || c.name || "",
+    title: env.CARD_TITLE || c.title || "",
+    tagline: c.tagline || "",
+    website: (env.CARD_WEBSITE || c.website || "").replace(/\/+$/, ""),
+    email: env.CARD_EMAIL || c.email || "",
+    phone: env.CARD_PHONE || c.phone || "",
+    whatsapp: env.CARD_WHATSAPP || c.whatsapp || "",
+    links: c.links || [],
+  };
+}
+const vEsc = (s) => String(s).replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/,/g, "\\,").replace(/;/g, "\\;");
+function vcard() {
+  const c = cardData();
+  const display = c.name || c.company;
+  const lines = ["BEGIN:VCARD", "VERSION:3.0", `FN:${vEsc(display)}`];
+  if (c.name) {
+    const parts = c.name.trim().split(/\s+/);
+    lines.push(`N:${vEsc(parts.slice(1).join(" "))};${vEsc(parts[0])};;;`);
+  } else lines.push(`N:${vEsc(c.company)};;;;`);
+  lines.push(`ORG:${vEsc(c.company)}`);
+  if (c.title) lines.push(`TITLE:${vEsc(c.title)}`);
+  if (c.email) lines.push(`EMAIL;TYPE=INTERNET,WORK:${c.email}`);
+  if (c.phone) lines.push(`TEL;TYPE=WORK,VOICE:${c.phone}`);
+  if (c.whatsapp) lines.push(`TEL;TYPE=CELL:${c.whatsapp}`);
+  if (c.website) lines.push(`URL:${c.website}`);
+  for (const l of c.links) lines.push(`URL;TYPE=${vEsc(l.label)}:${l.url}`);
+  if (c.tagline) lines.push(`NOTE:${vEsc(c.tagline)}`);
+  lines.push("END:VCARD");
+  return lines.join("\r\n") + "\r\n";
+}
+
+// ---- API status (cached 60s) for the footer badge ----
+let statusCache = { at: 0, up: null };
+async function apiStatus() {
+  if (Date.now() - statusCache.at < 60e3) return statusCache;
+  try {
+    const r = await fetch(API_BASE + "/health", { signal: AbortSignal.timeout(8000) });
+    statusCache = { at: Date.now(), up: r.ok };
+  } catch { statusCache = { at: Date.now(), up: false }; }
+  return statusCache;
+}
+
 // ---- static files ----
 const pageCache = new Map();
 function render(file) {
   const html = fs.readFileSync(file, "utf8");
   return html.replaceAll("{{API_BASE}}", API_BASE).replaceAll("{{API_HOST}}", new URL(API_BASE).host).replaceAll("{{CLOUD_URL}}", CLOUD_URL);
 }
+function sendMaybeGzip(req, res, body, ext, headers) {
+  if (COMPRESSIBLE.has(ext) && /\bgzip\b/.test(req.headers["accept-encoding"] || "")) {
+    return send(res, 200, zlib.gzipSync(body), { ...headers, "Content-Encoding": "gzip", Vary: "Accept-Encoding" });
+  }
+  send(res, 200, body, headers);
+}
 function serveStatic(req, res, url) {
   let p = decodeURIComponent(url.pathname);
   if (p === "/") p = "/index.html";
-  const file = path.normalize(path.join(PUBLIC, p));
+  let file = path.normalize(path.join(PUBLIC, p));
+  if (!path.extname(file) && fs.existsSync(file + ".html")) file += ".html"; // /card -> card.html
   if (!file.startsWith(PUBLIC) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
     const nf = path.join(PUBLIC, "404.html");
     return send(res, 404, fs.existsSync(nf) ? render(nf) : "Not found", { "Content-Type": "text/html; charset=utf-8" });
@@ -110,9 +169,9 @@ function serveStatic(req, res, url) {
   const cache = ext === ".html" ? "no-cache" : ext === ".svg" || ext === ".png" ? "public, max-age=86400" : "public, max-age=3600";
   if (ext === ".html") {
     if (!pageCache.has(file)) pageCache.set(file, render(file));
-    return send(res, 200, pageCache.get(file), { "Content-Type": type, "Cache-Control": cache });
+    return sendMaybeGzip(req, res, pageCache.get(file), ext, { "Content-Type": type, "Cache-Control": cache });
   }
-  send(res, 200, fs.readFileSync(file), { "Content-Type": type, "Cache-Control": cache });
+  sendMaybeGzip(req, res, fs.readFileSync(file), ext, { "Content-Type": type, "Cache-Control": cache });
 }
 
 const server = http.createServer(async (req, res) => {
@@ -120,6 +179,9 @@ const server = http.createServer(async (req, res) => {
     const url = new URL(req.url, "http://x");
     if (url.pathname === "/healthz") return json(res, 200, { ok: true });
     if (url.pathname === "/api/config") return json(res, 200, { contact: contactEnabled, apiBase: API_BASE });
+    if (url.pathname === "/api/card") return json(res, 200, cardData());
+    if (url.pathname === "/card.vcf" || url.pathname === "/ntandomods.vcf") return send(res, 200, vcard(), { "Content-Type": "text/vcard; charset=utf-8", "Content-Disposition": 'attachment; filename="ntandomods.vcf"', "Cache-Control": "no-cache" });
+    if (url.pathname === "/api/status") { const st = await apiStatus(); return json(res, 200, { api: st.up, checked: new Date(st.at).toISOString() }); }
     if (url.pathname === "/api/contact" && req.method === "POST") return await contact(req, res);
     if (url.pathname.startsWith("/api/ladybug")) return await proxy(req, res, url);
     if (req.method !== "GET" && req.method !== "HEAD") return json(res, 405, { error: "Method not allowed" });

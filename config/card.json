@@ -1,0 +1,14 @@
+{
+  "company": "Ntandomods INC",
+  "name": "",
+  "title": "",
+  "tagline": "APIs to build with. Mods to make it yours.",
+  "website": "https://ntandomods.mywire.org",
+  "email": "",
+  "phone": "",
+  "whatsapp": "",
+  "links": [
+    { "label": "Ladybug API", "url": "https://ladybug-api-e8q8.onrender.com/" },
+    { "label": "Ladybug Cloud", "url": "https://ladybugcloud.xubi.org/" }
+  ]
+}
