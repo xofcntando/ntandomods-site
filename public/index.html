@@ -39,19 +39,21 @@
         <a class="btn solid" href="https://ladybug-api-e8q8.onrender.com/pricing">Get an API key</a>
         <a class="btn" href="https://ladybugcloud.xubi.org/">Host a WhatsApp bot</a>
       </div>
-      <p class="meta">Try a sample request in the panel. No signup needed.</p>
+      <p class="meta">Try it: the panel makes a real call to Ladybug API. No signup needed.</p>
     </div>
 
-    <div class="console" aria-label="Sample API request">
+    <div class="console" aria-label="Live API request">
       <div class="console-bar"><i></i><i></i><i></i><span>ladybug-api-e8q8.onrender.com</span></div>
-      <div class="tabs" role="tablist" aria-label="Sample endpoints">
-        <button role="tab" aria-selected="true" data-ep="status">Status</button>
-        <button role="tab" aria-selected="false" data-ep="translate">Translate</button>
+      <div class="tabs" role="tablist" aria-label="Live endpoints">
+        <button role="tab" aria-selected="true" data-ep="currency">Currency</button>
+        <button role="tab" aria-selected="false" data-ep="dns">DNS lookup</button>
         <button role="tab" aria-selected="false" data-ep="qr">QR code</button>
       </div>
+      <form class="try" id="try"><div id="fields"></div></form>
       <pre class="req" id="req" tabindex="0"></pre>
-      <pre class="res" id="res" aria-live="polite"><span class="h">Press Send to see a sample response.</span></pre>
-      <div class="console-foot"><span>Sample response, not a live call</span><button class="send" id="send" type="button">Send request</button></div>
+      <pre class="res" id="res" aria-live="polite"><span class="h">Press Send to make a live call.</span></pre>
+      <img id="qrimg" alt="Generated QR code" hidden>
+      <div class="console-foot"><span id="quota">Live call. Uses a free test key, 50 requests.</span><button class="send" id="send" type="button">Send request</button></div>
     </div>
   </div>
 </section>
@@ -128,7 +130,7 @@
       </label>
       <label>Details<textarea name="msg" required></textarea></label>
       <button class="btn solid" type="submit" style="justify-self:start">Send message</button>
-      <p class="note" id="note">Opens your email app with the message ready to send.</p>
+      <p class="note" id="note" role="status"></p>
     </form>
   </div>
 </section>
@@ -142,48 +144,76 @@
 </footer>
 
 <script>
-const EMAIL=""; // add your real contact address here
+const API="https://ladybug-api-e8q8.onrender.com";
 const EP={
- status:{m:"GET",u:"/health",key:false,body:null,res:{status:"ok"}},
- translate:{m:"POST",u:"/v1/ai/translate",key:true,body:{text:"Good morning",target_language:"Zulu"},res:{ok:true,translation:"Sawubona ekuseni"}},
- qr:{m:"GET",u:"/v1/qr?data=ntandomods.mywire.org&size=300",key:true,body:null,res:{ok:true,type:"image/png",size:"300x300"}}
+ currency:{path:"/v1/utils/currency",fields:[["amount","Amount","100"],["from","From","USD"],["to","To","ZAR"]]},
+ dns:{path:"/v1/utils/dns",fields:[["domain","Domain","ntandomods.mywire.org"]]},
+ qr:{path:"/v1/qr",fields:[["data","Text or link","https://ntandomods.mywire.org"]],img:true}
 };
-const req=document.getElementById("req"),res=document.getElementById("res"),send=document.getElementById("send");
-let cur="status",timer;
-const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
-function show(){
+const $=id=>document.getElementById(id);
+const req=$("req"),res=$("res"),send=$("send"),fields=$("fields"),qrimg=$("qrimg"),quota=$("quota");
+let cur="currency";
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+function vals(){const o={};fields.querySelectorAll("input").forEach(i=>o[i.name]=i.value.trim());return o}
+function url(){const e=EP[cur];return API+e.path+"?"+new URLSearchParams(vals())}
+function showReq(){req.innerHTML=`<span class="m">GET</span> <span class="u">${esc(url().replace(API,""))}</span>\n<span class="h">X-API-Key:</span> YOUR_KEY`}
+function build(){
   const e=EP[cur];
-  let t=`<span class="m">${e.m}</span> <span class="u">${esc(e.u)}</span>${e.key?`\n<span class="h">X-API-Key:</span> YOUR_KEY`:""}`;
-  if(e.body)t+=`\n<span class="h">content-type:</span> application/json\n\n${esc(JSON.stringify(e.body,null,2))}`;
-  req.innerHTML=t;
-  res.innerHTML='<span class="h">Press Send to see a sample response.</span>';
+  fields.innerHTML=e.fields.map(([n,l,v])=>`<label>${l}<input name="${n}" value="${v}" autocomplete="off"></label>`).join("");
+  fields.querySelectorAll("input").forEach(i=>i.addEventListener("input",showReq));
+  res.innerHTML='<span class="h">Press Send to make a live call.</span>';qrimg.hidden=true;showReq();
 }
-function colour(j){return esc(j).replace(/"([^"]+)":/g,'<span class="k">"$1":</span>').replace(/: "([^"]*)"/g,': <span class="s">"$1"</span>').replace(/: (true|false|\d+)/g,': <span class="n">$1</span>')}
+function colour(j){return esc(j).replace(/"([^"]+)":/g,'<span class="k">"$1":</span>').replace(/: "([^"]*)"/g,': <span class="s">"$1"</span>').replace(/: (true|false|-?\d+\.?\d*)/g,': <span class="n">$1</span>')}
 document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>{
   document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
-  cur=b.dataset.ep;show();
+  cur=b.dataset.ep;build();
 }));
-send.addEventListener("click",()=>{
-  clearTimeout(timer);
-  res.innerHTML='<span class="h">Waiting for response...</span>';
-  timer=setTimeout(()=>{
-    const full="200 OK  &middot;  84 ms\n\n"+colour(JSON.stringify(EP[cur].res,null,2));
-    const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if(reduce){res.innerHTML=full;return}
-    // simple approach: reveal by lines
-    const lines=full.split("\n");let n=0;res.innerHTML="";
-    const step=()=>{n++;res.innerHTML=lines.slice(0,n).join("\n");if(n<lines.length)timer=setTimeout(step,70)};step();
-  },350);
+async function getKey(){
+  let k=localStorage.getItem("ntm_key");
+  if(k)return k;
+  const r=await fetch(API+"/v1/pricing/free-key",{method:"POST"});
+  const j=await r.json();k=j.key||j.api_key;
+  if(!k)throw new Error("Could not get a test key");
+  localStorage.setItem("ntm_key",k);return k;
+}
+send.addEventListener("click",async()=>{
+  send.disabled=true;qrimg.hidden=true;res.innerHTML='<span class="h">Calling the API...</span>';
+  const t0=performance.now();
+  try{
+    const key=await getKey();
+    const r=await fetch(url(),{headers:{"X-API-Key":key}});
+    const ms=Math.round(performance.now()-t0);
+    const left=r.headers.get("X-RateLimit-Remaining");
+    quota.textContent=left?`Live call. ${left} free test requests left.`:"Live call.";
+    const head=`${r.status} ${r.ok?"OK":"Error"}  &middot;  ${ms} ms\n\n`;
+    if(EP[cur].img&&r.ok){
+      const blob=await r.blob();qrimg.src=URL.createObjectURL(blob);qrimg.hidden=false;
+      res.innerHTML=head+`<span class="h">image/png, ${blob.size} bytes</span>`;
+    }else{
+      const text=await r.text();let out;
+      try{out=colour(JSON.stringify(JSON.parse(text),null,2))}catch(e){out=esc(text)}
+      res.innerHTML=head+out;
+    }
+  }catch(err){res.innerHTML=`<span class="n">Request failed.</span> ${esc(err.message)}. Check your connection and press Send again.`}
+  send.disabled=false;
 });
-show();
-document.getElementById("yr").textContent=new Date().getFullYear();
-if(EMAIL){document.getElementById("form").hidden=false;document.getElementById("paths").hidden=true}
-document.getElementById("form").addEventListener("submit",e=>{
+build();
+// Contact form: add a free Web3Forms access key (web3forms.com) to turn it on
+const WEB3FORMS_KEY="";
+if(WEB3FORMS_KEY){$("form").hidden=false;$("paths").hidden=true}
+$("form").addEventListener("submit",async e=>{
   e.preventDefault();
-  const f=new FormData(e.target);
-  const body=`Name: ${f.get("name")}\nEmail: ${f.get("email")}\n\n${f.get("msg")}`;
-  location.href=`mailto:${EMAIL}?subject=${encodeURIComponent("Ntandomods: "+f.get("topic"))}&body=${encodeURIComponent(body)}`;
+  const btn=e.target.querySelector("button"),note=$("note");btn.disabled=true;note.textContent="Sending...";
+  const f=new FormData(e.target);f.append("access_key",WEB3FORMS_KEY);f.append("subject","Ntandomods website: "+f.get("topic"));
+  try{
+    const r=await fetch("https://api.web3forms.com/submit",{method:"POST",body:f});
+    const j=await r.json();
+    if(j.success){note.textContent="Message sent. We will reply by email.";e.target.reset()}
+    else{note.textContent="Could not send: "+(j.message||"unknown error")+". Please try again."}
+  }catch(err){note.textContent="Could not send. Check your connection and try again."}
+  btn.disabled=false;
 });
+document.getElementById("yr").textContent=new Date().getFullYear();
 </script>
 </body>
 </html>
